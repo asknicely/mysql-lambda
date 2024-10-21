@@ -4,7 +4,7 @@ WORKDIR /root
 
 ARG VERSION=8.0.33
 
-RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which zip unzip
+RUN yum -y update && yum install -y cmake3 make gcc-c++ ncurses-devel openssl11 openssl11-devel python-devel wget tar gzip which gnupg2 zip unzip
 
 RUN wget -q https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-${VERSION}.tar.gz
 
@@ -16,6 +16,6 @@ RUN cd /opt; strip bin/* lib/*; rm lib/*.a;
 
 # Remove binaries that are too large that we don't need
 RUN cd /opt/bin; mv mysql mysqldump ..; rm *; cd ..; mv mysql mysqldump ./bin
-RUN cd /usr/bin; cp zip unzip /opt/bin
+RUN cd /usr/bin; cp gpg zip unzip /opt/bin
 
 RUN cd /opt; zip -9ry /root/mysql-${VERSION}-layer.zip bin lib
